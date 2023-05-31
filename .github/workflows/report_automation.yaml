@@ -1,0 +1,25 @@
+name: Report Automation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  automate_report:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+
+      - name: Install dependencies
+        run: pip install vt-py
+
+      - name: Parse IOCs and upload to respective destination
+        run: python apollo.py ${{ github.workspace }}
